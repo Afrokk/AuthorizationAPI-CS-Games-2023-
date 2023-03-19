@@ -1,0 +1,14 @@
+<%- include('header.ejs') %>
+<body>
+    <h1>Repositories</h1>
+    <div>
+        <% if(response){ %>
+            <% response.forEach(function(repo) { %>
+                    <li><p><strong>Name: </strong><%= repo.name %><p>
+                    <p><strong>License: </strong><%= repo.license %><p>
+                    <p><strong>Description: </strong><%= repo.description %><p></li>
+            <% }); %>
+        <% } %>
+    </div>
+</body>
+</html>

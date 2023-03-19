@@ -74,6 +74,21 @@ app.get("/logout", (req, res) => {
     res.render("index.ejs", { jwt: app.get('jwt')});
 });
 
+app.get('/repositories', async (req, res) => {
+    try {
+      const response = await axios.get('https://repo.lostgit.xyz/repositories', { 
+        headers: {
+            Authorization: 'Bearer ' + app.get('jwt')
+        }
+      });
+    //   res.send(response.data.repositories);
+      res.render("repositories.ejs", { response: response.data.repositories });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
 app.listen(3000, () => {
   console.log("Server running on port 3000");
 });

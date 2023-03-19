@@ -4,6 +4,9 @@
     <h3><a href="login">Login</a></h3>
     <h3><a href="signup">Create New User</a></h3>
     <% if(jwt){ %>
+        <form action="/repositories" method="GET">
+            <button name="repositories" value="repositories" type="submit">Show Repositories</button>
+        </form>
         <form action="/logout" method="GET">
             <button name="logout" value="logout" type="submit">Logout Session</button>
         </form>

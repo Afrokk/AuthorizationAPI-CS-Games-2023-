@@ -14,6 +14,9 @@
     </form>
     <% if(jwt){ %>
       <h3>User Authenticated Successfully.</h3>
+      <form action="/repositories" method="GET">
+        <button name="repositories" value="repositories" type="submit">Show Repositories</button>
+      </form>
       <form action="/logout" method="GET">
           <button name="logout" value="logout" type="submit">Logout Session</button>
       </form>
