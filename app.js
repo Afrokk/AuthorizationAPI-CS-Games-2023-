@@ -26,6 +26,7 @@ app.post('/login', (req, res) => {
         grant_type: 'password',
         client_id: 'tenant1',
         client_secret: 'dev',
+        // Bearer with service token, requires JWT signature on the other side
         Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlpocHhFQVlPVHFCVnhvTXpKWFRZc1ljRTItZz0iLCJ4NXQiOiJaaHB4RUFZT1RxQlZ4b016SlhUWXNZY0UyLWc9In0.eyJjbGllbnRfaWQiOiJ0ZW5hbnQxIiwiaXNzIjoiaHR0cHM6Ly9pZHNlcnZlci5sb3N0Z2l0Lnh5eiIsImF1ZCI6WyJodHRwczovL2lkc2VydmVyLmxvc3RnaXQueHl6IiwicmVwb2FwaSIsImlkc2VydmVyIiwic25pcHBldHNhcGkiXSwic2NvcGUiOlsicmVwb2FwaSIsImlkc2VydmVyIiwic25pcHBldHNhcGkiXSwibmJmIjoxNjc5MTYyNTQxLCJleHAiOjE2NzkxNjYxNDEsImlzX3NlcnZpY2UiOiJ0cnVlIiwicm9sZSI6InNlcnZpY2UifQ.bVMQghaDVXAwr1eRo-Q_fzri7NWyR_q6u0_tZ0P1_Y-r3rdqeWE7lR_Z87HUgbEkRGVTx5WgLS6WLSKNhzGSzPNzOZ2XDme2Xav3ties6maTUFrLAgpllg-KvjgBdBYlXGFCBu0aup0MsDaPwKQF7AzZvfNqbbOkXs9ATTzlc0SP5z85EKZkP-EjdgIDPcZsveITMCcSqa1C_JnizF7WnGjmB7M5d4h6dnKlZObluGyzNcLlThe4cjrJAVgRYlVrpr0g1N8t88k0y4IjJEh-cufDPCCJ8PdV255aCQNg8tDMkP3l8aLN_Fw8F3RxwfOTKfqtQZYZiVEkG5kJu2n9cA"
     }, {
         headers: {
