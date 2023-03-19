@@ -20,47 +20,25 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  //Get Service Token
-  axios
-    .post(
-      "https://idserver.lostgit.xyz/connect/token",
-      {
-        client_id: "tenant1",
-        client_secret: "dev",
-        grant_type: "client_credentials",
-      },
-      {
+    axios
+        .post("https://idserver.lostgit.xyz/connect/token", {
+            grant_type: "password",
+            client_id: "tenant1",
+            username: req.body.username,
+            password: req.body.password,
+            client_secret: "dev",
+        }, {
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+            "Content-Type": "application/x-www-form-urlencoded",
         },
-      }
-    )
-    .then((response) => {
-        const dataFrame = new FormData();
-        dataFrame.append("username", req.body.username);
-        dataFrame.append("password", req.body.password);
-        dataFrame.append("grant_type", "password");
-        dataFrame.append("client_id", "tenant1");
-        dataFrame.append("client_secret", "dev");
-        dataFrame.append("Authorization", `Bearer ${response.data.access_token}`);
-      
-        axios
-          .post("https://idserver.lostgit.xyz/connect/token", dataFrame, {
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-          })
-          .then((response) => {
-            let jwt = response.data.access_token;
-            res.render("login.ejs", { jwt: jwt });
-          })
-          .catch((error) => {
-            res.render("error.ejs", { errorMsg: "Invalid Username/Password" });
-          });
-      })
-      .catch((error) => {
-        res.render("error.ejs", { errorMsg: "Unauthorized" });
-      });
+        })
+        .then((response) => {
+        let jwt = response.data.access_token;
+        res.render("login.ejs", { jwt: jwt });
+        })
+        .catch((error) => {
+        res.render("error.ejs", { errorMsg: "Invalid Username/Password" });
+        });
 });
 
 app.get("/signup", (req, res) => {
