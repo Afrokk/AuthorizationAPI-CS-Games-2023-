@@ -3,5 +3,10 @@
     <h1>Welcome to Snippet Service</h1>
     <h3><a href="login">Login</a></h3>
     <h3><a href="signup">Create New User</a></h3>
+    <% if(jwt){ %>
+        <form action="/logout" method="GET">
+            <button name="logout" value="logout" type="submit">Logout Session</button>
+        </form>
+    <% } %>
 </body>
 </html>
