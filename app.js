@@ -21,25 +21,29 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-    axios
-        .post("https://idserver.lostgit.xyz/connect/token", {
-            grant_type: "password",
-            client_id: "tenant1",
-            username: req.body.username,
-            password: req.body.password,
-            client_secret: "dev",
-        }, {
+  axios
+    .post(
+      "https://idserver.lostgit.xyz/connect/token",
+      {
+        grant_type: "password",
+        client_id: "tenant1",
+        username: req.body.username,
+        password: req.body.password,
+        client_secret: "dev",
+      },
+      {
         headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        })
-        .then((response) => {
-        app.set('jwt', response.data.access_token);
-        res.render("login.ejs", { jwt: app.get('jwt') });
-        })
-        .catch((error) => {
-        res.render("error.ejs", { errorMsg: "Invalid Username/Password" });
-        });
+      }
+    )
+    .then((response) => {
+      app.set("jwt", response.data.access_token);
+      res.render("login.ejs", { jwt: app.get("jwt") });
+    })
+    .catch((error) => {
+      res.render("error.ejs", { errorMsg: "Invalid Username/Password" });
+    });
 });
 
 app.get("/signup", (req, res) => {
@@ -57,7 +61,7 @@ app.post("/signup", (req, res) => {
       {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
-          "Authorization": "Bearer " + app.get('jwt')
+          Authorization: "Bearer " + app.get("jwt"),
         },
       }
     )
@@ -70,24 +74,56 @@ app.post("/signup", (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
-    app.set('jwt', null);
-    res.render("index.ejs", { jwt: app.get('jwt')});
+  app.set("jwt", null);
+  res.render("index.ejs", { jwt: app.get("jwt") });
 });
 
-app.get('/repositories', async (req, res) => {
-    try {
-      const response = await axios.get('https://repo.lostgit.xyz/repositories', { 
-        headers: {
-            Authorization: 'Bearer ' + app.get('jwt')
-        }
-      });
-    //   res.send(response.data.repositories);
-      res.render("repositories.ejs", { response: response.data.repositories });
-    } catch (error) {
-      console.error(error);
-      res.status(500).send('Internal Server Error');
-    }
-  });
+// Repository list service:
+// app.get('/repositories', async (req, res) => {
+//     try {
+//       const response = await axios.get('https://repo.lostgit.xyz/repositories', {
+//         headers: {
+//             Authorization: 'Bearer ' + app.get('jwt')
+//         }
+//       });
+//     //   res.send(response.data.repositories);
+//       res.render("repositories.ejs", { response: response.data.repositories });
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).send('Internal Server Error');
+//     }
+//   });
+
+// Repository list service with pagination:
+
+// app.get("/repositories", async (req, res) => {
+//   try {
+//     const skip = parseInt(req.query.skip) || 0;
+//     const limit = parseInt(req.query.limit) || 10;
+
+//     const response = await axios.get("https://repo.lostgit.xyz/repositories", {
+//       headers: {
+//         Authorization: "Bearer " + app.get("jwt"),
+//       },
+//       params: {
+//         skip,
+//         limit,
+//       },
+//     });
+
+//     const { repositories, totalMatches } = response.data;
+
+//     res.render("repositories.ejs", {
+//       repositories,
+//       totalMatches,
+//       currentPage: skip / limit + 1,
+//       totalPages: Math.ceil(totalMatches / limit),
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");
