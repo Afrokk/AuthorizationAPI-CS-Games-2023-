@@ -1,14 +1,36 @@
 <%- include('header.ejs') %>
-<body>
-    <h1>Repositories</h1>
-    <div>
-        <% if(response){ %>
-            <% response.forEach(function(repo) { %>
-                    <li><p><strong>Name: </strong><%= repo.name %><p>
-                    <p><strong>License: </strong><%= repo.license %><p>
-                    <p><strong>Description: </strong><%= repo.description %><p></li>
+    <body>
+        <h1>Repositories</h1>
+        <form action="/repositories" method="get">
+            <input type="text" name="filter" value="<%= filter %>">
+            <button type="submit">Filter</button>
+        </form>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Language</th>
+                <th>Stars</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% repositories.forEach((repository) => { %>
+                <tr>
+                    <td><a href="/repositories/<%= repository.id %>"><%= repository.name %></a></td>
+                    <td><%= repository.project %></td>
+                    <td><%= repository.description %></td>
+                    <td><%= repository.license %></td>
+                </tr>
             <% }); %>
+            </tbody>
+        </table>
+        <% if (totalPages > 1) { %>
+            <div>
+            <% for (let i = 1; i <= totalPages; i++) { %>
+                <a href="/repositories?page=<%= i %>&filter=<%= filter %>"><%= i %></a>
+            <% } %>
+            </div>
         <% } %>
-    </div>
-</body>
+    </body>
 </html>

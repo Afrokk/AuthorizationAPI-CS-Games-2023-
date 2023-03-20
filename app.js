@@ -125,6 +125,38 @@ app.get("/logout", (req, res) => {
 //   }
 // });
 
+app.get("/repositories", async (req, res) => {
+  try {
+    const skip = parseInt(req.query.skip) || 0;
+    const limit = parseInt(req.query.limit) || 10;
+    const filter = req.query.filter || "";
+
+    const response = await axios.get("https://repo.lostgit.xyz/repositories", {
+      headers: {
+        Authorization: "Bearer " + app.get("jwt"),
+      },
+      params: {
+        skip,
+        limit,
+        filter,
+      },
+    });
+
+    const { repositories, totalMatches } = response.data;
+
+    res.render("repositories.ejs", {
+      repositories,
+      totalMatches,
+      currentPage: skip / limit + 1,
+      totalPages: Math.ceil(totalMatches / limit),
+      filter,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 app.listen(3000, () => {
   console.log("Server running on port 3000");
 });
