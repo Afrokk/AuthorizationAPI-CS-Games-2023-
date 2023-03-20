@@ -157,6 +157,21 @@ app.get("/repositories", async (req, res) => {
   }
 });
 
+app.get("/repositories/:id", async (req, res) => {
+  try {
+    const repositoryId = req.params.id;
+    const response = await axios.get(`https://repo.lostgit.xyz/repositories/${repositoryId}`, {
+      headers: {
+        Authorization: "Bearer " + app.get("jwt"),
+      },
+    });
+    res.send(response.data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 app.listen(3000, () => {
   console.log("Server running on port 3000");
 });

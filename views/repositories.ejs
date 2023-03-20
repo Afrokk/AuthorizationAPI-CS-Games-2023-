@@ -7,18 +7,16 @@
         </form>
         <table>
             <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Language</th>
-                <th>Stars</th>
-            </tr>
-            </thead>
-            <tbody>
+                <tr>
+                    <th>Name</th>
+                    <th>Project</th>
+                    <th>Description</th>
+                    <th>License</th>
+                </tr>
             <% repositories.forEach((repository) => { %>
                 <tr>
                     <td><a href="/repositories/<%= repository.id %>"><%= repository.name %></a></td>
-                    <td><%= repository.project %></td>
+                    <td><%= repository.name %></td>
                     <td><%= repository.description %></td>
                     <td><%= repository.license %></td>
                 </tr>
@@ -27,9 +25,9 @@
         </table>
         <% if (totalPages > 1) { %>
             <div>
-            <% for (let i = 1; i <= totalPages; i++) { %>
-                <a href="/repositories?page=<%= i %>&filter=<%= filter %>"><%= i %></a>
-            <% } %>
+                <% for (let i = 1; i <= totalPages; i++) { %>
+                    <a href="/repositories?page=<%= i %>&filter=<%= filter %>"><%= i %></a>
+                <% } %>
             </div>
         <% } %>
     </body>
