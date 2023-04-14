@@ -3,7 +3,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 import axios from "axios";
 import bodyParser from "body-parser";
-import { request } from "http";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
